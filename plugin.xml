@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="camera-cordova-plugin" version="1.0.0">
+
+  <name>Custom Camera</name>
+  <description>Custom camera for taking photos of documents</description>
+  <license></license>
+
+  <js-module src="www/CustomCamera.js" name="CustomCamera">
+    <clobbers target="CustomCamera" />
+  </js-module>
+
+    <!-- Android -->
+    <platform name="android">
+     <framework custom="true" src="platform/android/customcamera.gradle" type="gradleReference"/>
+
+        
+      <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="CustomCamera">
+          <param name="android-package" value="com.expcapital.customcamera.CustomCamera" />
+          <param name="onload" value="true" />
+        </feature>
+      </config-file>
+        
+      <resource-file src="platform/android/res/layout/activity_camera.xml" target="res/layout/activity_camera.xml" />
+        
+      <resource-file src="platform/android/res/drawable/photo.png" target="res/drawable/photo.png" />
+      <resource-file src="platform/android/res/drawable/photo_selector.xml" target="res/drawable/photo_selector.xml" />
+      <resource-file src="platform/android/res/drawable/photo_press.png" target="res/drawable/photo_press.png" />
+      <resource-file src="platform/android/res/drawable/cancel_selector.xml" target="res/drawable/cancel_selector.xml" />
+
+      <source-file src="platform/android/com/expcapital/customcamera/CustomCamera.java" target-dir="src/com/expcapital/customcamera/" />
+      <source-file src="platform/android/com/expcapital/customcamera/CameraActivity.java" target-dir="src/com/expcapital/customcamera/" />
+      <source-file src="platform/android/com/expcapital/customcamera/ViewfinderView.java" target-dir="src/com/expcapital/customcamera/" />
+        
+      <config-file parent="/*/application" target="app/src/main/AndroidManifest.xml" after="activity">
+            <activity android:name="com.expcapital.customcamera.CameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+      </config-file>
+    </platform>
+</plugin>
