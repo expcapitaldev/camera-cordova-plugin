@@ -33,7 +33,7 @@
       <source-file src="platform/android/com/expcapital/customcamera/CameraActivity.java" target-dir="src/com/expcapital/customcamera/" />
       <source-file src="platform/android/com/expcapital/customcamera/ViewfinderView.java" target-dir="src/com/expcapital/customcamera/" />
         
-      <config-file parent="/*/application" target="app/src/main/AndroidManifest.xml" after="activity">
+      <config-file target="AndroidManifest.xml" parent="/manifest/application" after="activity">
             <activity android:name="com.expcapital.customcamera.CameraActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
