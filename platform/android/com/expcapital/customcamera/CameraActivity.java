@@ -55,12 +55,15 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onPictureTaken(byte[] jpeg) {
                 super.onPictureTaken(jpeg);
-                CameraUtils.decodeBitmap(jpeg, bitmap -> {
-                    ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
-                    String encodedImage = Base64.encodeToString(jpeg_data.toByteArray(), Base64.NO_WRAP);
-                    CustomCamera.onSuccess(encodedImage);
-                    CameraActivity.this.finish();
+                CameraUtils.decodeBitmap(jpeg, new CameraUtils.BitmapCallback() {
+                    @Override
+                    public void onBitmapReady(Bitmap bitmap) {
+                        ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
+                        String encodedImage = Base64.encodeToString(jpeg_data.toByteArray(), Base64.NO_WRAP);
+                        CustomCamera.onSuccess(encodedImage);
+                        CameraActivity.this.finish();
+                    }
                 });
             }
         });
