@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="camera-cordova-plugin" version="1.0.0">
+        id="camera-cordova-plugin" version="1.0.2">
 
   <name>Custom Camera</name>
   <description>Custom camera for taking photos of documents</description>
   <license></license>
+
+  <repo>https://stash.itcapital.io/scm/pub/camera-plugin.git</repo>
 
   <js-module src="www/CustomCamera.js" name="CustomCamera">
     <clobbers target="CustomCamera" />
