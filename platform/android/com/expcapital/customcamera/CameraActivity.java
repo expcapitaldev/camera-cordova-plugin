@@ -64,7 +64,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                     File pictureFile = new File(getFilesDir(), File.separator + timeStamp + ".base64");
 
-                    String encodedImage = Base64.encodeToString(jpeg, Base64.DEFAULT);
+                    String encodedImage = Base64.encodeToString(jpeg, Base64.NO_WRAP);
 
                     PrintWriter fos = new PrintWriter(pictureFile);
                     fos.println(encodedImage);
