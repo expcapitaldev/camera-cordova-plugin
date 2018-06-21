@@ -93,6 +93,15 @@ public class CustomCamera extends CordovaPlugin {
         }
     }
 
+    public static void onSuccess(String file) {
+        if (sInstance != null) {
+            CustomCamera c = sInstance.get();
+            if (c != null) {
+                c.mCallbackContext.success(file);
+            }
+        }
+    }
+
     public static void onError(ErrorCodes msg) {
         if (sInstance != null) {
             CustomCamera c = sInstance.get();
