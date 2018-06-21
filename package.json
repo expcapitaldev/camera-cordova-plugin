@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://stash.itcapital.io/scm/es/camera-plugin.git"
+    "url": "git+https://stash.itcapital.io/scm/pub/camera-plugin.git"
   },
   "author": {
     "name": "egor.bevz",
