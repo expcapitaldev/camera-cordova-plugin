@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -60,9 +62,12 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 super.onPictureTaken(jpeg);
                 try {
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                    File pictureFile = new File(getFilesDir(), File.separator + "IMG_" + timeStamp + ".jpg");
-                    FileOutputStream fos = new FileOutputStream(pictureFile);
-                    fos.write(jpeg);
+                    File pictureFile = new File(getFilesDir(), File.separator + timeStamp + ".base64");
+
+                    String encodedImage = Base64.encodeToString(jpeg, Base64.DEFAULT);
+
+                    PrintWriter fos = new PrintWriter(pictureFile);
+                    fos.println(encodedImage);
                     fos.close();
                     CustomCamera.onSuccess(pictureFile);
                 } catch (FileNotFoundException e) {
