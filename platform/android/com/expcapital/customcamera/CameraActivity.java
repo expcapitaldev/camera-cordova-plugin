@@ -5,27 +5,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.otaliastudios.cameraview.CameraException;
 import com.otaliastudios.cameraview.CameraListener;
+import com.otaliastudios.cameraview.CameraUtils;
 import com.otaliastudios.cameraview.CameraView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.ByteArrayOutputStream;
 
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -60,24 +55,13 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onPictureTaken(byte[] jpeg) {
                 super.onPictureTaken(jpeg);
-                try {
-                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                    File pictureFile = new File(getFilesDir(), File.separator + timeStamp + ".base64");
-
-                    String encodedImage = Base64.encodeToString(jpeg, Base64.NO_WRAP);
-
-                    PrintWriter fos = new PrintWriter(pictureFile);
-                    fos.println(encodedImage);
-                    fos.close();
-                    CustomCamera.onSuccess(pictureFile);
-                } catch (FileNotFoundException e) {
-                    Log.d(TAG, "File not found: " + e.getMessage());
-                    CustomCamera.onError(CustomCamera.ErrorCodes.FILE_NOT_FOUND);
-                } catch (IOException e) {
-                    Log.d(TAG, "Error accessing file: " + e.getMessage());
-                    CustomCamera.onError(CustomCamera.ErrorCodes.ERROR_ACCESSING_FILE);
-                }
-                CameraActivity.this.finish();
+                CameraUtils.decodeBitmap(jpeg, bitmap -> {
+                    ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
+                    String encodedImage = Base64.encodeToString(jpeg_data.toByteArray(), Base64.NO_WRAP);
+                    CustomCamera.onSuccess(encodedImage);
+                    CameraActivity.this.finish();
+                });
             }
         });
         button = findViewById(res.getIdentifier("shot", "id", getPackageName()));
