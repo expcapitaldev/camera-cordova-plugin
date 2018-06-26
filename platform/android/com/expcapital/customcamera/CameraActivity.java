@@ -32,6 +32,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     private static final String CANCEL_KEY = "CANCEL_KEY";
     private static final String TYPE_KEY = "TYPE_KEY";
     private static final String TAG = "CameraActivity";
+    private static final String MSGPROC_KEY = "MSG_PROC_KEY";
 
     private CameraView cameraView;
     private ImageView button;
@@ -39,7 +40,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     private TextView message;
     private ViewfinderView viewFinder;
     private ViewfinderView.Type type;
-    private View progressView;
+    private String msgproc;
 
 
     @Override
@@ -48,8 +49,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         Resources res = getResources();
         setContentView(res.getIdentifier("activity_camera", "layout", getPackageName()));
         cameraView = findViewById(res.getIdentifier("camera", "id", getPackageName()));
-        progressView = findViewById(res.getIdentifier("progress", "id", getPackageName()));
-        cameraView.setJpegQuality(50);
         cameraView.setPlaySounds(true);
         cameraView.addCameraListener(new CameraListener() {
 
@@ -63,7 +62,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onPictureTaken(byte[] jpeg) {
                 super.onPictureTaken(jpeg);
-                cameraView.setVisibility(View.INVISIBLE);
+                cameraView.stop();
                 CameraUtils.decodeBitmap(jpeg, new CameraUtils.BitmapCallback() {
                     @Override
                     public void onBitmapReady(final Bitmap bitmap) {
@@ -125,6 +124,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 String subtitle = args.getString(SUBTITLE_KEY, "");
                 String msg = args.getString(MSG_KEY, "");
                 String cancl = args.getString(CANCEL_KEY, "");
+                msgproc = args.getString(MSGPROC_KEY);
                 if (!TextUtils.isEmpty(cancl)) {
                     cancel.setText(cancl);
                 }
@@ -170,7 +170,8 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         Resources res = getResources();
         if (v.getId() == res.getIdentifier("shot", "id", getPackageName())) {
             cameraView.capturePicture();
-            progressView.setVisibility(View.VISIBLE);
+            message.setText(msgproc);
+            cameraView.setVisibility(View.INVISIBLE);
             button.setClickable(false);
             button.setEnabled(false);
         } else if (v.getId() == res.getIdentifier("cancel", "id", getPackageName())) {
@@ -213,12 +214,13 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    public static Intent prepareIntent(Context ctx, String title, String subtitle, String cancel, String msg, ViewfinderView.Type type) {
+    public static Intent prepareIntent(Context ctx, String title, String subtitle, String cancel, String msg, String msgproc, ViewfinderView.Type type) {
         Intent intent = new Intent(ctx, CameraActivity.class);
         intent.putExtra(TITLE_KEY, title);
         intent.putExtra(SUBTITLE_KEY, subtitle);
         intent.putExtra(CANCEL_KEY, cancel);
         intent.putExtra(MSG_KEY, msg);
+        intent.putExtra(MSGPROC_KEY, msgproc);
         intent.putExtra(TYPE_KEY, type.name());
         return intent;
     }
