@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +37,9 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     private ImageView button;
     private TextView cancel;
     private TextView message;
+    private ViewfinderView viewFinder;
+    private ViewfinderView.Type type;
+    private View progressView;
 
 
     @Override
@@ -43,6 +48,9 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         Resources res = getResources();
         setContentView(res.getIdentifier("activity_camera", "layout", getPackageName()));
         cameraView = findViewById(res.getIdentifier("camera", "id", getPackageName()));
+        progressView = findViewById(res.getIdentifier("progress", "id", getPackageName()));
+        cameraView.setJpegQuality(50);
+        cameraView.setPlaySounds(true);
         cameraView.addCameraListener(new CameraListener() {
 
             @Override
@@ -55,14 +63,46 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onPictureTaken(byte[] jpeg) {
                 super.onPictureTaken(jpeg);
+                cameraView.setVisibility(View.INVISIBLE);
                 CameraUtils.decodeBitmap(jpeg, new CameraUtils.BitmapCallback() {
                     @Override
-                    public void onBitmapReady(Bitmap bitmap) {
-                        ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
-                        String encodedImage = Base64.encodeToString(jpeg_data.toByteArray(), Base64.NO_WRAP);
-                        CustomCamera.onSuccess(encodedImage);
-                        CameraActivity.this.finish();
+                    public void onBitmapReady(final Bitmap bitmap) {
+                        final Handler handler = new Handler();
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                Bitmap cropped = null;
+                                if (ViewfinderView.Type.PASSPORT.equals(type) || ViewfinderView.Type.LICENCE.equals(type)) {
+                                    int width = bitmap.getWidth();
+                                    int height = bitmap.getHeight();
+                                    float ratio = type.getAspectRatio();
+                                    int croppedHeight = (int) (width * ratio);
+                                    int croppedY = (height - croppedHeight) / 2;
+                                    cropped = Bitmap.createBitmap(bitmap, 0, croppedY, width, croppedHeight);
+                                    bitmap.recycle();
+                                }
+                                ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
+                                if (cropped != null) {
+                                    cropped.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
+                                    cropped.recycle();
+                                } else {
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
+                                    bitmap.recycle();
+                                }
+                                final String encodedImage = Base64.encodeToString(jpeg_data.toByteArray(), Base64.NO_WRAP);
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            CustomCamera.onSuccess(encodedImage);
+                                            CameraActivity.this.finish();
+                                        } catch (Exception e) {
+                                            CustomCamera.onError(CustomCamera.ErrorCodes.ERROR_PROCESSING_IMAGE);
+                                        }
+                                    }
+                                }, 1000);
+                            }
+                        });
                     }
                 });
             }
@@ -74,11 +114,10 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         cancel = findViewById(res.getIdentifier("cancel", "id", getPackageName()));
         cancel.setOnClickListener(this);
 
-        ViewfinderView viewFinder = findViewById(res.getIdentifier("view_finder", "id", getPackageName()));
+        viewFinder = findViewById(res.getIdentifier("view_finder", "id", getPackageName()));
         TextView number = findViewById(res.getIdentifier("number", "id", getPackageName()));
         TextView side = findViewById(res.getIdentifier("side", "id", getPackageName()));
 
-        ViewfinderView.Type type;
         try {
             Bundle args = getIntent().getExtras();
             if (args != null) {
@@ -131,6 +170,9 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         Resources res = getResources();
         if (v.getId() == res.getIdentifier("shot", "id", getPackageName())) {
             cameraView.capturePicture();
+            progressView.setVisibility(View.VISIBLE);
+            button.setClickable(false);
+            button.setEnabled(false);
         } else if (v.getId() == res.getIdentifier("cancel", "id", getPackageName())) {
             setResult(Activity.RESULT_CANCELED);
             CameraActivity.this.finish();

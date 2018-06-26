@@ -27,7 +27,7 @@ public class CustomCamera extends CordovaPlugin {
     private CallbackContext mCallbackContext;
 
     public enum ErrorCodes {
-        CANCELLED, CAMERA_ERROR, FILE_NOT_FOUND, ERROR_ACCESSING_FILE, NO_PERMISSION,
+        CANCELLED, CAMERA_ERROR, FILE_NOT_FOUND, ERROR_PROCESSING_IMAGE, NO_PERMISSION,
     }
 
     @Override
