@@ -47,6 +47,7 @@ public class CustomCamera extends CordovaPlugin {
             String msg = null;
             String msgproc = null;
             String cancel = null;
+            String msgtake = null;
             ViewfinderView.Type type = null;
             try {
                 if (args != null && args.length() == 1) {
@@ -57,19 +58,20 @@ public class CustomCamera extends CordovaPlugin {
                     msg = params.getString(3);
                     type = ViewfinderView.Type.valueOf(params.getString(4));
                     msgproc = params.optString(5, "Processing");
+                    msgtake = params.optString(6, "Taking picture");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
-            takePicture(title, subtitle, cancel, msg, msgproc, type);
+            takePicture(title, subtitle, cancel, msg, msgproc, msgtake, type);
         }
         return true;
     }
 
-    private void takePicture(String title, String subtitle, String cancel, String msg, String msgproc, ViewfinderView.Type type) {
-        cordova.startActivityForResult(this, CameraActivity.prepareIntent(cordova.getActivity(), title, subtitle, cancel, msg, msgproc, type), CAMERA_REQUEST_CODE);
+    private void takePicture(String title, String subtitle, String cancel, String msg, String msgproc, String msgtake, ViewfinderView.Type type) {
+        cordova.startActivityForResult(this, CameraActivity.prepareIntent(cordova.getActivity(), title, subtitle, cancel, msg, msgproc, msgtake, type), CAMERA_REQUEST_CODE);
     }
 
     @Override

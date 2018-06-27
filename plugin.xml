@@ -30,6 +30,7 @@
       <resource-file src="platform/android/res/drawable/photo_selector.xml" target="res/drawable/photo_selector.xml" />
       <resource-file src="platform/android/res/drawable/photo_press.png" target="res/drawable/photo_press.png" />
       <resource-file src="platform/android/res/drawable/cancel_selector.xml" target="res/drawable/cancel_selector.xml" />
+      <resource-file src="platform/android/res/drawable/progress_drawable.xml" target="res/drawable/progress_drawable.xml" />
 
       <source-file src="platform/android/com/expcapital/customcamera/CustomCamera.java" target-dir="src/com/expcapital/customcamera/" />
       <source-file src="platform/android/com/expcapital/customcamera/CameraActivity.java" target-dir="src/com/expcapital/customcamera/" />

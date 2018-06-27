@@ -21,13 +21,25 @@
 
     </com.expcapital.customcamera.ViewfinderView>
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:id="@+id/progress_bar"
+        android:layout_width="48dp"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:indeterminateDuration="1500"
+        android:layout_height="48dp"
+        android:indeterminateDrawable="@drawable/progress_drawable"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/suggest"/>
     <TextView
         android:id="@+id/suggest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:padding="64dp"
+        android:paddingLeft="64dp"
+        android:paddingRight="64dp"
         android:shadowColor="#80000000"
         android:shadowDx="1"
         android:shadowDy="1"
