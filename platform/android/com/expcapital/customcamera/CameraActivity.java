@@ -51,7 +51,12 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Resources res = getResources();
+
         setContentView(res.getIdentifier("activity_camera", "layout", getPackageName()));
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         cameraView = findViewById(res.getIdentifier("camera", "id", getPackageName()));
         progress = findViewById(res.getIdentifier("progress_bar", "id", getPackageName()));
         cameraView.addCameraListener(new CameraListener() {
@@ -156,14 +161,12 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
         cameraView.start();
-        hideSystemUI();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         cameraView.stop();
-        showSystemUI();
     }
 
     @Override
@@ -202,25 +205,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             finish();
         }
     }
-
-    private void hideSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
-
-    private void showSystemUI() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
-
 
     public static Intent prepareIntent(Context ctx, String title, String subtitle, String cancel, String msg, String msgproc, String msgtake, ViewfinderView.Type type) {
         Intent intent = new Intent(ctx, CameraActivity.class);
