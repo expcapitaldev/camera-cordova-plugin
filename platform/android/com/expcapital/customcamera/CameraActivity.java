@@ -59,6 +59,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
         cameraView = findViewById(res.getIdentifier("camera", "id", getPackageName()));
         progress = findViewById(res.getIdentifier("progress_bar", "id", getPackageName()));
+        cameraView.setPlaySounds(false);
         cameraView.addCameraListener(new CameraListener() {
 
             @Override
