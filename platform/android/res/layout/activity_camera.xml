@@ -64,6 +64,7 @@
             android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="1 of 2"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
@@ -72,6 +73,7 @@
             android:id="@+id/side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Front side up photo"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
