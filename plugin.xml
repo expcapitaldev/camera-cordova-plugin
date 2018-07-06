@@ -39,6 +39,7 @@
       <config-file target="AndroidManifest.xml" parent="/manifest/application" after="activity">
             <activity android:name="com.expcapital.customcamera.CameraActivity"
             android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
       </config-file>
     </platform>

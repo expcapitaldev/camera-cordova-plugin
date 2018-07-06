@@ -83,13 +83,23 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                             public void run() {
                                 Bitmap cropped = null;
                                 if (ViewfinderView.Type.PASSPORT.equals(type) || ViewfinderView.Type.LICENCE.equals(type)) {
-                                    int width = bitmap.getWidth();
-                                    int height = bitmap.getHeight();
-                                    float ratio = type.getAspectRatio();
-                                    int croppedHeight = (int) (width * ratio);
-                                    int croppedY = (height - croppedHeight) / 2;
-                                    cropped = Bitmap.createBitmap(bitmap, 0, croppedY, width, croppedHeight);
-                                    bitmap.recycle();
+                                    try {
+                                        int width = bitmap.getWidth();
+                                        int height = bitmap.getHeight();
+                                        float ratio = type.getAspectRatio();
+                                        if (width <= height) {
+                                            int croppedHeight = (int) (width * ratio);
+                                            int croppedY = (height - croppedHeight) / 2;
+                                            cropped = Bitmap.createBitmap(bitmap, 0, croppedY, width, croppedHeight);
+                                        } else {
+                                            int croppedWidth = (int) (height * ratio);
+                                            int croppedX = (width - croppedWidth) / 2;
+                                            cropped = Bitmap.createBitmap(bitmap, croppedX, 0, croppedWidth, height);
+                                        }
+                                        bitmap.recycle(); // Recycle only in case of success
+                                    } catch (Exception e) {
+                                        // Ignore error, falls back to original image below
+                                    }
                                 }
                                 ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
                                 if (cropped != null) {
