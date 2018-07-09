@@ -10,8 +10,8 @@
         android:id="@+id/camera"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cameraPictureSizeMaxHeight="1000"
-        app:cameraPictureSizeMaxWidth="1000" 
+        app:cameraPictureSizeMaxHeight="2048"
+        app:cameraPictureSizeMaxWidth="2048" 
         android:keepScreenOn="true"/>
 
     <com.expcapital.customcamera.ViewfinderView
