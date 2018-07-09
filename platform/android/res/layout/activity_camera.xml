@@ -10,8 +10,7 @@
         android:id="@+id/camera"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        app:cameraCropOutput="true" />
+        android:keepScreenOn="true"/>
 
     <com.expcapital.customcamera.ViewfinderView
         android:id="@+id/view_finder"
