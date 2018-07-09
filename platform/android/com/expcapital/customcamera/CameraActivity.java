@@ -103,10 +103,10 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                                 }
                                 ByteArrayOutputStream jpeg_data = new ByteArrayOutputStream();
                                 if (cropped != null) {
-                                    cropped.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
+                                    cropped.compress(Bitmap.CompressFormat.JPEG, 85, jpeg_data);
                                     cropped.recycle();
                                 } else {
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, jpeg_data);
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 85, jpeg_data);
                                     bitmap.recycle();
                                 }
                                 final String encodedImage = Base64.encodeToString(jpeg_data.toByteArray(), Base64.NO_WRAP);
