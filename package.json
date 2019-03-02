@@ -5,7 +5,8 @@
   "cordova": {
     "id": "camera-cordova-plugin",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "repository": {
