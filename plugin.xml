@@ -4,9 +4,12 @@
 
   <name>Custom Camera</name>
   <description>Custom camera for taking photos of documents</description>
-  <license></license>
-
+  <license>Apache 2.0</license>
   <repo>https://stash.itcapital.io/scm/pub/camera-plugin.git</repo>
+
+  <engines>
+      <engine name="cordova" version=">=3.1.0" />
+  </engines>
 
   <js-module src="www/CustomCamera.js" name="CustomCamera">
     <clobbers target="CustomCamera" />
