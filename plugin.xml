@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        id="cordova-plugin-custom-camera" version="1.0.14">
+        id="camera-cordova-plugin" version="1.0.14">
 
-  <name>CustomCamera</name>
+  <name>Custom Camera</name>
   <description>Custom camera for taking photos of documents</description>
   <license>Apache 2.0</license>
   <repo>https://stash.itcapital.io/scm/pub/camera-plugin.git</repo>
