@@ -1,6 +1,6 @@
 {
   "name": "camera-cordova-plugin",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Custom camera for taking photos of documents",
   "cordova": {
     "id": "camera-cordova-plugin",
@@ -12,10 +12,7 @@
     "type": "git",
     "url": "https://stash.itcapital.io/scm/pub/camera-plugin.git"
   },
-  "author": {
-    "name": "egor.bevz",
-    "email": "egor.bevz@expcapital.com"
-  },
+  "author": "",
   "keywords": [
     "ecosystem:cordova",
     "cordova-android"
@@ -26,6 +23,5 @@
       "version": ">=3.1.0"
     }
   ],
-  "author": "",
   "license": "Apache 2.0"
 }
