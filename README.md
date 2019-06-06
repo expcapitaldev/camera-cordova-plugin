@@ -23,3 +23,4 @@ In order to run test project, you need to add plugin and build the project.
 Plugin has 2 dependencies, please keep attention on version of support library. You can update it if needed:
     'com.android.support:appcompat-v7:27.1.1'
     'com.otaliastudios:cameraview:1.5.1'
+# camera-cordova-plugin
