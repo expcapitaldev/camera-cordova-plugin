@@ -1,6 +1,6 @@
 {
   "name": "camera-cordova-plugin",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Custom camera for taking photos of documents",
   "cordova": {
     "id": "camera-cordova-plugin",
