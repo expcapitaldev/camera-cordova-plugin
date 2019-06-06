@@ -5,7 +5,7 @@
   <name>Custom Camera</name>
   <description>Custom camera for taking photos of documents</description>
   <license>Apache 2.0</license>
-  <repo>https://stash.itcapital.io/scm/pub/camera-plugin.git</repo>
+  <repo>https://github.com/expcapitaldev/camera-cordova-plugin</repo>
 
   <engines>
       <engine name="cordova" version=">=3.1.0" />
