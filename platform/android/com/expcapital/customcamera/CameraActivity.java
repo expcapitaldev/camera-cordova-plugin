@@ -22,6 +22,7 @@ import com.otaliastudios.cameraview.CameraException;
 import com.otaliastudios.cameraview.CameraListener;
 import com.otaliastudios.cameraview.CameraUtils;
 import com.otaliastudios.cameraview.CameraView;
+import com.otaliastudios.cameraview.Facing;
 
 import java.io.ByteArrayOutputStream;
 
@@ -155,6 +156,13 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                     message.setText(msg);
                 }
                 type = ViewfinderView.Type.valueOf(args.getString(TYPE_KEY, ""));
+
+                if (ViewfinderView.Type.FACE.equals(type)) {
+                  cameraView.setFacing(Facing.FRONT);
+                } else {
+                  cameraView.setFacing(Facing.BACK);
+                }
+
                 if (TextUtils.isEmpty(title)) {
                     number.setVisibility(View.GONE);
                 } else {

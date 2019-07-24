@@ -12,7 +12,7 @@ module.exports = {
    / Takes picture from native camera. Returns Base64 jpeg.
    / CustomCamera.takePicture(success, failure, [title, subtitle, cancel, message, type])
    /
-   / Type could be: PASSPORT, A4, LICENCE, NONE
+   / Type could be: PASSPORT, A4, LICENCE, NONE, FACE
    / Returns absolute file path for stored image in successCallback. Image is stored in
    / internal storage so no extra permissions needed.
    / 

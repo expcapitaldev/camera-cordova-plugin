@@ -23,7 +23,7 @@ public class ViewfinderView extends FrameLayout {
 
     public enum Type {
 
-        LICENCE(0.62f), A4(1.41f), PASSPORT(0.68f), NONE(1);
+        LICENCE(0.62f), A4(1.41f), PASSPORT(0.68f), NONE(1), FACE(1.41f);
 
         private final float aspectRatio;
 
@@ -118,6 +118,9 @@ public class ViewfinderView extends FrameLayout {
             } else if (Type.A4.equals(type)) {
                 canvas.drawRect(viewFinderRect.left, viewFinderRect.top, viewFinderRect.right, viewFinderRect.bottom, mBackgroundPaint);
                 canvas.drawRect(viewFinderRect.left, viewFinderRect.top, viewFinderRect.right, viewFinderRect.bottom, mStrokePaint);
+            }  else if (Type.FACE.equals(type)) {
+                canvas.drawRect(viewFinderRect.left, viewFinderRect.top, viewFinderRect.right, viewFinderRect.bottom, mBackgroundPaint);
+                canvas.drawRect(viewFinderRect.left, viewFinderRect.top, viewFinderRect.right, viewFinderRect.bottom, mStrokePaint);
             }
         } else {
             if (Type.PASSPORT.equals(type)) {
@@ -128,6 +131,9 @@ public class ViewfinderView extends FrameLayout {
                 canvas.drawRoundRect(viewFinderRect, RADIUS, RADIUS, mBackgroundPaint);
                 canvas.drawRoundRect(viewFinderRect, RADIUS, RADIUS, mStrokePaint);
             } else if (Type.A4.equals(type)) {
+                canvas.drawRect(viewFinderRect, mBackgroundPaint);
+                canvas.drawRect(viewFinderRect, mStrokePaint);
+            } else if (Type.FACE.equals(type)) {
                 canvas.drawRect(viewFinderRect, mBackgroundPaint);
                 canvas.drawRect(viewFinderRect, mStrokePaint);
             }
