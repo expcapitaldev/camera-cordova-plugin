@@ -46,4 +46,29 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
       </config-file>
     </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="CustomCamera">
+                <param name="ios-package" value="CustomCamera" />
+            </feature>
+        </config-file>
+        
+        <header-file src="platform/ios/CustomCamera.h" />
+        <source-file src="platform/ios/CustomCamera.m" />
+        <header-file src="platform/ios/CCCameraOptions.h" />
+        <source-file src="platform/ios/CCCameraOptions.m" />
+        <header-file src="platform/ios/CCCameraManager.h" />
+        <source-file src="platform/ios/CCCameraManager.m" />
+        <header-file src="platform/ios/CCCameraViewController.h" />
+        <source-file src="platform/ios/CCCameraViewController.m" />
+
+        <resource-file src="platform/ios/CCCameraViewController.xib" />
+        <resource-file src="platform/ios/res/cc_capture_btn.png" />
+        <resource-file src="platform/ios/res/cc_capture_btn@2x.png" />
+        <resource-file src="platform/ios/res/cc_capture_btn@3x.png" />
+
+        <framework src="AVFoundation.framework" />
+    </platform>
 </plugin>
