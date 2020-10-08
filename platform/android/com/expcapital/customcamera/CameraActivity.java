@@ -22,9 +22,10 @@ import com.otaliastudios.cameraview.CameraException;
 import com.otaliastudios.cameraview.CameraListener;
 import com.otaliastudios.cameraview.CameraUtils;
 import com.otaliastudios.cameraview.CameraView;
-import com.otaliastudios.cameraview.Facing;
-
+import com.otaliastudios.cameraview.controls.Facing;
+import com.otaliastudios.cameraview.PictureResult;
 import java.io.ByteArrayOutputStream;
+import com.otaliastudios.cameraview.BitmapCallback;
 
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -71,11 +72,11 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onPictureTaken(byte[] jpeg) {
-                super.onPictureTaken(jpeg);
-                cameraView.stop();
+            public void onPictureTaken(PictureResult result) {
+                super.onPictureTaken(result);
+                cameraView.close();
                 message.setText(msgproc);
-                CameraUtils.decodeBitmap(jpeg, new CameraUtils.BitmapCallback() {
+                CameraUtils.decodeBitmap(result.getData(), new BitmapCallback() {
                     @Override
                     public void onBitmapReady(final Bitmap bitmap) {
                         final Handler handler = new Handler();
@@ -179,13 +180,13 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        cameraView.start();
+        cameraView.open();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        cameraView.stop();
+        cameraView.close();
     }
 
     @Override
@@ -198,7 +199,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         Resources res = getResources();
         if (v.getId() == res.getIdentifier("shot", "id", getPackageName())) {
-            cameraView.capturePicture();
+            cameraView.takePicture();
             button.setClickable(false);
             message.setText(take);
             progress.setVisibility(View.VISIBLE);
@@ -217,8 +218,8 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         for (int grantResult : grantResults) {
             valid = valid && grantResult == PackageManager.PERMISSION_GRANTED;
         }
-        if (valid && !cameraView.isStarted()) {
-            cameraView.start();
+        if (valid && !cameraView.isOpened()) {
+            cameraView.open();
         } else {
             CustomCamera.onError(CustomCamera.ErrorCodes.NO_PERMISSION);
             finish();
