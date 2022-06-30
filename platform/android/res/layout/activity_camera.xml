@@ -12,7 +12,9 @@
         android:layout_height="match_parent"
         app:cameraPictureSizeMaxHeight="2048"
         app:cameraPictureSizeMaxWidth="2048" 
-        android:keepScreenOn="true"/>
+        android:keepScreenOn="true"
+		app:cameraAudio="off"
+	/>
 
     <com.expcapital.customcamera.ViewfinderView
         android:id="@+id/view_finder"
